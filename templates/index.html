@@ -1,85 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twitter Sentiment Analysis</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: white;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter Sentiment Analysis</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1da1f2, #e6ecf0);
+      color: #14171a;
+    }
 
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, #1e3c72, #2a5298, #00c6ff);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+    }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+    h1 {
+      font-size: 3rem;
+      color: #ffffff;
+      animation: fadeIn 2s ease-in-out;
+    }
 
-        .container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
+    p {
+      font-size: 1.2rem;
+      color: #ffffff;
+      animation: slideIn 1.5s ease-in-out;
+    }
 
-        input, button {
-            margin-top: 15px;
-            padding: 10px;
-            width: 80%;
-            border: none;
-            border-radius: 5px;
-        }
+    /* Buttons */
+    .btn {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        button {
-            background: #00c6ff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    .btn-primary {
+      background: #1da1f2;
+      color: #ffffff;
+    }
 
-        button:hover {
-            background: #1e3c72;
-        }
-    </style>
+    .btn-primary:hover {
+      background: #1991db;
+    }
+
+    .btn-secondary {
+      background: #657786;
+      color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+      background: #586874;
+    }
+
+    /* Sentiment Analysis Section */
+    .sentiment-section {
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    .sentiment-section h2 {
+      color: #1da1f2;
+    }
+
+    .sentiment-section textarea {
+      width: 80%;
+      height: 100px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .sentiment-section .result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #1da1f2;
+    }
+
+    /* Diagrams */
+    .diagram {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 30px;
+    }
+
+    .diagram div {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: bold;
+      animation: bounce 2s infinite;
+    }
+
+    .positive {
+      background: #4caf50;
+    }
+
+    .neutral {
+      background: #ffeb3b;
+      color: #000000;
+    }
+
+    .negative {
+      background: #f44336;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
 </head>
 <body>
-    <div class="background-animation"></div>
-    <div class="container">
-        <h1>Twitter Sentiment Analysis</h1>
-        <p>Enter a Twitter handle or hashtag to analyze sentiment.</p>
-        <input type="text" id="twitterInput" placeholder="Enter @handle or #hashtag">
-        <button onclick="analyzeSentiment()">Analyze</button>
-        <div id="result"></div>
+  <div class="container">
+    <h1>Twitter Sentiment Analysis</h1>
+    <p>Analyze the sentiment of tweets in real-time!</p>
+
+    <!-- Buttons -->
+    <button class="btn btn-primary" onclick="analyzeSentiment()">Analyze Sentiment</button>
+    <button class="btn btn-secondary" onclick="clearText()">Clear</button>
+
+    <!-- Sentiment Analysis Section -->
+    <div class="sentiment-section">
+      <h2>Enter a Tweet</h2>
+      <textarea id="tweetInput" placeholder="Paste your tweet here..."></textarea>
+      <div class="result" id="result"></div>
     </div>
-    <script>
-        function analyzeSentiment() {
-            document.getElementById("result").innerText = "Analyzing sentiment...";
-            setTimeout(() => {
-                document.getElementById("result").innerText = "Sentiment analysis results will be displayed here.";
-            }, 2000);
-        }
-    </script>
+
+    <!-- Diagrams -->
+    <div class="diagram">
+      <div class="positive">Positive</div>
+      <div class="neutral">Neutral</div>
+      <div class="negative">Negative</div>
+    </div>
+  </div>
+
+  <script>
+    // Sentiment Analysis Logic
+    function analyzeSentiment() {
+      window.location.href = '/predict';
+    }
+
+    // Clear Text
+    function clearText() {
+      document.getElementById('tweetInput').value = '';
+      document.getElementById('result').textContent = '';
+    }
+  </script>
 </body>
 </html>
-
