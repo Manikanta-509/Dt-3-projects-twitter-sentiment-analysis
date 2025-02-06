@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1DA1F2, #14171A);
+            color: white;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background: #ffcc00;
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff9900;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Twitter Sentiment Analysis</h1>
+        <p>Analyze tweets and determine sentiment in real-time.</p>
+        <button id="analyze-btn">Start Analysis</button>
+    </div>
+
+    <script>
+        document.getElementById("analyze-btn").addEventListener("click", function() {
+            alert("Sentiment Analysis Started!");
+        });
+    </script>
+</body>
+</html>
