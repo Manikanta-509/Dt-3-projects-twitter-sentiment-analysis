@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twitter Sentiment Analysis</title>
+    <title>Predict Sentiment</title>
     <style>
         body {
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
             font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
         .container {
             background: white;
             padding: 30px;
@@ -22,10 +23,18 @@
             text-align: center;
             width: 400px;
         }
+
         h2 {
             color: #ff4d6d;
             margin-bottom: 20px;
         }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         textarea {
             width: 100%;
             height: 100px;
@@ -34,7 +43,9 @@
             border-radius: 5px;
             resize: none;
             font-size: 16px;
+            margin-bottom: 10px;
         }
+
         button {
             background: #ff4d6d;
             color: white;
@@ -43,12 +54,13 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 15px;
             transition: 0.3s;
         }
+
         button:hover {
             background: #d63e5b;
         }
+
         .output {
             margin-top: 15px;
             font-size: 18px;
@@ -60,27 +72,15 @@
 <body>
 
     <div class="container">
-        <h2>Twitter Sentiment Analysis</h2>
-        <textarea id="message" placeholder="Enter your tweet..."></textarea>
-        <button onclick="predictSentiment()">Analyze Sentiment</button>
-        <div class="output" id="result"></div>
+        <h2>Enter Your Tweet</h2>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <textarea name="message" placeholder="Type your tweet here..." required></textarea>
+            <button type="submit">Analyze Sentiment</button>
+        </form>
+        {% if sentiment %}
+        <div class="output">Sentiment: {{ sentiment }}</div>
+        {% endif %}
     </div>
-
-    <script>
-        function predictSentiment() {
-            let message = document.getElementById("message").value;
-            if (message.trim() === "") {
-                alert("Please enter a message!");
-                return;
-            }
-            
-            // Simulating sentiment analysis output
-            let sentiments = ["Positive 😊", "Negative 😞", "Neutral 😐"];
-            let randomSentiment = sentiments[Math.floor(Math.random() * sentiments.length)];
-
-            document.getElementById("result").innerHTML = "Sentiment: " + randomSentiment;
-        }
-    </script>
 
 </body>
 </html>

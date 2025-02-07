@@ -50,6 +50,7 @@
         .analyze-btn:hover {
             background: #ff9900;
             transform: scale(1.1);
+            box-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
         }
     </style>
 </head>
@@ -57,7 +58,7 @@
     <div class="container">
         <h1>Twitter Sentiment Analysis</h1>
         <p>Analyze tweets and determine sentiment in real-time.</p>
-        <a href="/predict" class="analyze-btn">Start Analysis</a>
+        <a href="{{ url_for('predict') }}" class="analyze-btn">Start Analysis</a>
     </div>
 </body>
 </html>
