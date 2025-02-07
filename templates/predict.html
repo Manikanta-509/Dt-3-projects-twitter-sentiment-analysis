@@ -3,71 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentiment Predictor</title>
+    <title>Predict Sentiment</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            text-align: center;
-            padding: 50px;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
+
         .container {
             background: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            width: 50%;
-            margin: auto;
+            text-align: center;
+            width: 400px;
         }
-        input {
-            width: 80%;
+
+        h2 {
+            color: #ff4d6d;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
             padding: 10px;
-            margin-top: 10px;
+            border: 2px solid #ff4d6d;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            resize: none;
+            font-size: 16px;
+            margin-bottom: 10px;
         }
+
         button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: #ff758c;
+            background: #ff4d6d;
             color: white;
             border: none;
+            padding: 12px 20px;
+            font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            transition: 0.3s;
         }
+
         button:hover {
-            background: #ff5252;
+            background: #d63e5b;
         }
-        #result {
+
+        .output {
             margin-top: 15px;
+            font-size: 18px;
             font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <h2>Sentiment Predictor</h2>
-        <input type="text" id="message" placeholder="Enter your message...">
-        <br>
-        <button onclick="predictSentiment()">Know Sentiment</button>
-        <p id="result"></p>
+        <h2>Enter Your Tweet</h2>
+        <form action="{{ url_for('predict') }}" method="POST">
+            <textarea name="message" placeholder="Type your tweet here..." required></textarea>
+            <button type="submit">Analyze Sentiment</button>
+        </form>
+        {% if sentiment %}
+        <div class="output">Sentiment: {{ sentiment }}</div>
+        {% endif %}
     </div>
-    <script>
-        function predictSentiment() {
-            let message = document.getElementById("message").value;
-            let resultElement = document.getElementById("result");
-            
-            if (message.toLowerCase().includes("happy") || message.toLowerCase().includes("good")) {
-                resultElement.innerText = "😊 Positive Sentiment";
-                resultElement.style.color = "green";
-            } else if (message.toLowerCase().includes("sad") || message.toLowerCase().includes("bad")) {
-                resultElement.innerText = "😞 Negative Sentiment";
-                resultElement.style.color = "red";
-            } else {
-                resultElement.innerText = "😐 Neutral Sentiment";
-                resultElement.style.color = "blue";
-            }
-        }
-    </script>
+
 </body>
 </html>
