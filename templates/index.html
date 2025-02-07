@@ -33,7 +33,8 @@
             margin-bottom: 20px;
         }
 
-        button {
+        a {
+            display: inline-block;
             padding: 15px 30px;
             font-size: 1.2em;
             border: none;
@@ -42,9 +43,10 @@
             color: black;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
 
-        button:hover {
+        a:hover {
             background: #ff9900;
             transform: scale(1.1);
         }
@@ -54,13 +56,7 @@
     <div class="container">
         <h1>Twitter Sentiment Analysis</h1>
         <p>Analyze tweets and determine sentiment in real-time.</p>
-        <button id="analyze-btn">Start Analysis</button>
+        <a href="/predict">Start Analysis</a>
     </div>
-
-    <script>
-        document.getElementById("analyze-btn").addEventListener("click", function() {
-            window.location.href = window.location.origin + "/predict";
-        });
-    </script>
 </body>
 </html>
