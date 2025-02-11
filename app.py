@@ -64,7 +64,8 @@ def predict():
         pred = model.predict(data)
         return jsonify({"result": str(pred[0])})
     
-    return render_template('predict.html', sentiment=sentiment)
+    else:
+        return render_template('predict.html', sentiment=sentiment)
 
 # Run the Flask app
 if __name__ == '__main__':
